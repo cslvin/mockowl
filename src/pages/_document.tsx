@@ -6,7 +6,9 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    {/* Add custom meta tags, stylesheets, etc. here */}
+                    <link rel="preconnect" href="https://fonts.googleapis.com" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet" />
                 </Head>
                 <body>
                 <Main />

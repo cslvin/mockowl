@@ -1,29 +1,11 @@
 // src/components/CreateServiceForm.tsx
-'use client';
-
 import { useState, useEffect } from 'react';
-import { Button, TextField, MenuItem, Grid, IconButton } from '@mui/material';
-import { Upload as UploadIcon } from '@mui/icons-material';
+import { TextField, Button, MenuItem, Grid } from '@mui/material';
 
 interface CreateServiceFormProps {
-    onCreate: (service: { serviceName: string; networkCallType: string; usageDataType: string }) => void;
+    onCreate: (newService: { serviceName: string; networkCallType: string; usageDataType: string }) => void;
     initialData?: { serviceName: string; networkCallType: string; usageDataType: string };
 }
-
-const protocols = [
-    'HTTP',
-    'HTTPS',
-    'WebSocket',
-    'gRPC',
-    'MQTT',
-];
-
-const usageDataTypes = [
-    'JSON',
-    'XML',
-    'CSV',
-    'Binary',
-];
 
 const CreateServiceForm = ({ onCreate, initialData }: CreateServiceFormProps) => {
     const [serviceName, setServiceName] = useState(initialData?.serviceName || '');
@@ -38,61 +20,59 @@ const CreateServiceForm = ({ onCreate, initialData }: CreateServiceFormProps) =>
         }
     }, [initialData]);
 
-    const handleCreate = () => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
         onCreate({ serviceName, networkCallType, usageDataType });
     };
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} style={{ textAlign: 'right' }}>
-                <IconButton color="primary">
-                    <UploadIcon />
-                </IconButton>
+        <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                        label="Service Name"
+                        value={serviceName}
+                        onChange={(e) => setServiceName(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        select
+                        label="Network Call Type"
+                        value={networkCallType}
+                        onChange={(e) => setNetworkCallType(e.target.value)}
+                        fullWidth
+                        required
+                    >
+                        <MenuItem value="HTTP">HTTP</MenuItem>
+                        <MenuItem value="TCP/IP">TCP/IP</MenuItem>
+                        <MenuItem value="UDP">UDP</MenuItem>
+                        <MenuItem value="WebSocket">WebSocket</MenuItem>
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        select
+                        label="Usage Data Type"
+                        value={usageDataType}
+                        onChange={(e) => setUsageDataType(e.target.value)}
+                        fullWidth
+                        required
+                    >
+                        <MenuItem value="JSON">JSON</MenuItem>
+                        <MenuItem value="XML">XML</MenuItem>
+                        <MenuItem value="PlainText">PlainText</MenuItem>
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type="submit" variant="contained" color="primary">
+                        {initialData ? 'Update Service' : 'Create Service'}
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    label="Name"
-                    value={serviceName}
-                    onChange={(e) => setServiceName(e.target.value)}
-                    fullWidth
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    select
-                    label="Choose Protocol"
-                    value={networkCallType}
-                    onChange={(e) => setNetworkCallType(e.target.value)}
-                    fullWidth
-                >
-                    {protocols.map((protocol) => (
-                        <MenuItem key={protocol} value={protocol}>
-                            {protocol}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    select
-                    label="Choose Usage Data Type"
-                    value={usageDataType}
-                    onChange={(e) => setUsageDataType(e.target.value)}
-                    fullWidth
-                >
-                    {usageDataTypes.map((type) => (
-                        <MenuItem key={type} value={type}>
-                            {type}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Grid>
-            <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={handleCreate}>
-                    {initialData ? 'Save Changes' : 'Create'}
-                </Button>
-            </Grid>
-        </Grid>
+        </form>
     );
 };
 

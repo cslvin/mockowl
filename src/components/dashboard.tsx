@@ -6,6 +6,7 @@ import { Grid, Typography, Button, Dialog, DialogActions, DialogContent, DialogT
 import CreateServiceForm from './CreateServiceForm';
 import ServiceList from './ServiceList';
 import ServiceDetails from './ServiceDetails';
+import styled from '@emotion/styled';
 
 interface Service {
     serviceName: string;
@@ -13,6 +14,13 @@ interface Service {
     usageDataType: string;
     isRunning: boolean;
 }
+
+const CreateButton = styled(Button)`
+    background-color: #074973;
+    &:hover {
+        background-color: #074973;
+    }
+`;
 
 const Dashboard = () => {
     const [services, setServices] = useState<Service[]>([]);
@@ -63,13 +71,16 @@ const Dashboard = () => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ marginTop: '16px' }}>
                 <Typography variant="h4" gutterBottom>
                     Dashboard
                 </Typography>
-                <Button variant="contained" color="primary" onClick={() => setIsDialogOpen(true)}>
+                <CreateButton
+                    variant="contained"
+                    onClick={() => setIsDialogOpen(true)}
+                >
                     Create Service
-                </Button>
+                </CreateButton>
             </Grid>
             <Grid item xs={12}>
                 <ServiceList
@@ -82,7 +93,10 @@ const Dashboard = () => {
             <Dialog open={isDialogOpen} onClose={() => { setIsDialogOpen(false); setIsEditMode(false); }}>
                 <DialogTitle>{isEditMode ? 'Edit Service' : 'Create a New Service'}</DialogTitle>
                 <DialogContent>
-                    <CreateServiceForm onCreate={handleCreateService} />
+                    <CreateServiceForm
+                        onCreate={handleCreateService}
+                        initialData={isEditMode && selectedService ? selectedService : undefined}
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { setIsDialogOpen(false); setIsEditMode(false); }} color="primary">
