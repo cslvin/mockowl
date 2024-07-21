@@ -1,4 +1,3 @@
-// src/components/dashboard.tsx
 'use client';
 
 import { useState } from 'react';
@@ -6,7 +5,6 @@ import { Grid, Typography, Button, Dialog, DialogActions, DialogContent, DialogT
 import CreateServiceForm from './CreateServiceForm';
 import ServiceList from './ServiceList';
 import ServiceDetails from './ServiceDetails';
-import styled from '@emotion/styled';
 
 interface Service {
     serviceName: string;
@@ -14,13 +12,6 @@ interface Service {
     usageDataType: string;
     isRunning: boolean;
 }
-
-const CreateButton = styled(Button)`
-    background-color: #074973;
-    &:hover {
-        background-color: #074973;
-    }
-`;
 
 const Dashboard = () => {
     const [services, setServices] = useState<Service[]>([]);
@@ -71,16 +62,13 @@ const Dashboard = () => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} style={{ marginTop: '16px' }}>
-                <Typography variant="h4" gutterBottom>
+            <Grid item xs={12} style={{ marginTop: '16px' }}> {/* Add margin here */}
+                <Typography variant="h4" gutterBottom className="font-sans">
                     Dashboard
                 </Typography>
-                <CreateButton
-                    variant="contained"
-                    onClick={() => setIsDialogOpen(true)}
-                >
-                    Create Service
-                </CreateButton>
+                <Button variant="contained" color="primary" onClick={() => setIsDialogOpen(true)} className="font-sans">
+                    CREATE SERVICE
+                </Button>
             </Grid>
             <Grid item xs={12}>
                 <ServiceList
@@ -91,7 +79,7 @@ const Dashboard = () => {
                 />
             </Grid>
             <Dialog open={isDialogOpen} onClose={() => { setIsDialogOpen(false); setIsEditMode(false); }}>
-                <DialogTitle>{isEditMode ? 'Edit Service' : 'Create a New Service'}</DialogTitle>
+                <DialogTitle className="font-sans">{isEditMode ? 'Edit Service' : 'Create a New Service'}</DialogTitle>
                 <DialogContent>
                     <CreateServiceForm
                         onCreate={handleCreateService}
@@ -99,14 +87,14 @@ const Dashboard = () => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { setIsDialogOpen(false); setIsEditMode(false); }} color="primary">
+                    <Button onClick={() => { setIsDialogOpen(false); setIsEditMode(false); }} color="primary" className="font-sans">
                         Cancel
                     </Button>
                 </DialogActions>
             </Dialog>
             {selectedService && (
                 <Dialog open={Boolean(selectedService)} onClose={handleCloseServiceDetails}>
-                    <DialogTitle>Service Details</DialogTitle>
+                    <DialogTitle className="font-sans">Service Details</DialogTitle>
                     <DialogContent>
                         <ServiceDetails
                             service={selectedService}
@@ -115,7 +103,7 @@ const Dashboard = () => {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseServiceDetails} color="primary">
+                        <Button onClick={handleCloseServiceDetails} color="primary" className="font-sans">
                             Close
                         </Button>
                     </DialogActions>

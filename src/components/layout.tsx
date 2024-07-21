@@ -1,31 +1,20 @@
-// src/components/layout.tsx
-import { ReactNode } from 'react';
-import { AppBar, Toolbar, Typography, Container } from '@mui/material';
-import styled from '@emotion/styled';
+'use client';
 
-interface LayoutProps {
-    children: ReactNode;
-}
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
-const CustomAppBar = styled(AppBar)`
-    background-color: #08678C;
-`;
-
-const Title = styled(Typography)`
-    font-size: 2rem;
-`;
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
-            <CustomAppBar position="static">
+            <AppBar position="static" className="bg-primary">
                 <Toolbar>
-                    <Title variant="h6">Mock Owl</Title>
+                    <Typography variant="h6" className="text-white font-nunito text-3xl"> {/* Increase font size and apply Nunito font */}
+                        Mock Owl
+                    </Typography>
                 </Toolbar>
-            </CustomAppBar>
-            <Container>
+            </AppBar>
+            <main className="p-4">
                 {children}
-            </Container>
+            </main>
         </div>
     );
 };

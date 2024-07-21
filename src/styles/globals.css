@@ -1,51 +1,22 @@
-/* Import Nunito font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Color Theme Swatches in Hex */
-{ color: #011C40; }
-{ color: #011126; }
-{ color: #032859; }
-{ color: #074973; }
-{ color: #08678C; }
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 30, 31, 43;
-    --background-end-rgb: 21, 22, 28;
-  }
-}
 
 /* Ensure html and body take up the full height */
 html, body {
   height: 100%;
-}
-
-body {
-  @apply font-sans; /* Use the font configured in Tailwind CSS */
-  color: rgb(var(--foreground-rgb));
-  margin: 0;
-  /* Ensure the background is fixed and covers the entire viewport */
-  background: linear-gradient(
-          to bottom,
-          rgb(var(--background-start-rgb)),
-          rgb(var(--background-end-rgb))
-  ) fixed;
-  /* Apply Nunito font to the body element */
   font-family: 'Nunito', sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+body {
+  @apply bg-gradient-to-b from-gray-200 to-white text-black;
+  font-family: 'Nunito', sans-serif; /* Ensure Nunito font is applied */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-gradient-to-b from-gray-800 to-gray-900 text-white;
   }
 }

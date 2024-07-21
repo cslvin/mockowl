@@ -1,4 +1,3 @@
-// src/components/ServiceList.tsx
 'use client';
 
 import { Grid, Paper, Typography, IconButton } from '@mui/material';
@@ -7,6 +6,7 @@ import { PlayArrow as PlayArrowIcon, Stop as StopIcon } from '@mui/icons-materia
 interface Service {
     serviceName: string;
     networkCallType: string;
+    usageDataType: string;
     isRunning: boolean;
 }
 
@@ -23,22 +23,23 @@ const ServiceList = ({ services, onStart, onStop, onShowDetails }: ServiceListPr
             {services.map((service, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
                     <Paper style={{ padding: 16 }} onClick={() => onShowDetails(service.serviceName)}>
-                        <Typography variant="h6">{service.serviceName}</Typography>
-                        <Typography variant="body2">Type: {service.networkCallType}</Typography>
+                        <Typography variant="h6" className="font-sans">{service.serviceName}</Typography>
+                        <Typography variant="body2" className="font-sans">Type: {service.networkCallType}</Typography>
+                        <Typography variant="body2" className="font-sans">Usage Data Type: {service.usageDataType}</Typography>
+                        <Typography variant="body2" className="font-sans">Status: {service.isRunning ? 'Running' : 'Stopped'}</Typography>
                         <Grid container spacing={1} style={{ marginTop: 8 }}>
                             <Grid item>
                                 {service.isRunning ? (
-                                    <IconButton onClick={(e) => {e.stopPropagation(); onStop(service.serviceName);}} color="secondary">
+                                    <IconButton onClick={(e) => { e.stopPropagation(); onStop(service.serviceName); }} color="secondary">
                                         <StopIcon />
                                     </IconButton>
                                 ) : (
-                                    <IconButton onClick={(e) => {e.stopPropagation(); onStart(service.serviceName);}} color="primary">
+                                    <IconButton onClick={(e) => { e.stopPropagation(); onStart(service.serviceName); }} color="primary">
                                         <PlayArrowIcon />
                                     </IconButton>
                                 )}
                             </Grid>
                         </Grid>
-                        {/* Add more metrics or information here as needed */}
                     </Paper>
                 </Grid>
             ))}

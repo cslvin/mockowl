@@ -1,40 +1,34 @@
-// src/components/ServiceDetails.tsx
 'use client';
 
-import { Typography, Button, Grid } from '@mui/material';
-
-interface Service {
-    serviceName: string;
-    networkCallType: string;
-    isRunning: boolean;
-    usageDataType: string;
-}
+import { Button } from '@mui/material';
 
 interface ServiceDetailsProps {
-    service: Service;
+    service: {
+        serviceName: string;
+        networkCallType: string;
+        usageDataType: string;
+        isRunning: boolean;
+    };
     onDelete: (serviceName: string) => void;
     onEdit: () => void;
 }
 
 const ServiceDetails = ({ service, onDelete, onEdit }: ServiceDetailsProps) => {
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant="h6">{service.serviceName}</Typography>
-                <Typography variant="body2">Type: {service.networkCallType}</Typography>
-                <Typography variant="body2">Usage Data Type: {service.usageDataType}</Typography>
-                <Typography variant="body2">Status: {service.isRunning ? 'Running' : 'Stopped'}</Typography>
-            </Grid>
-            {/* Add more metrics or configuration details here */}
-            <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={onEdit}>
-                    Edit Service
+        <div className="space-y-4 font-nunito">
+            <h2 className="text-2xl font-bold">{service.serviceName}</h2>
+            <p className="text-lg">Type: {service.networkCallType}</p>
+            <p className="text-lg">Usage Data Type: {service.usageDataType}</p>
+            <p className="text-lg">Status: {service.isRunning ? 'Running' : 'Stopped'}</p>
+            <div className="space-x-2">
+                <Button variant="contained" color="primary" onClick={onEdit} className="font-nunito">
+                    Edit
                 </Button>
-                <Button variant="contained" color="error" onClick={() => onDelete(service.serviceName)}>
-                    Delete Service
+                <Button variant="contained" color="secondary" onClick={() => onDelete(service.serviceName)} className="font-nunito">
+                    Delete
                 </Button>
-            </Grid>
-        </Grid>
+            </div>
+        </div>
     );
 };
 
